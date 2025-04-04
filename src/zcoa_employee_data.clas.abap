@@ -4,7 +4,7 @@ CLASS zcoa_employee_data DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-  interfaces if_oo_adt_classrun.
+    INTERFACES if_oo_adt_classrun.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -61,8 +61,19 @@ CLASS zcoa_employee_data IMPLEMENTATION.
 *        out->write( |Failed to update job! { SY-subrc }| ).
 *    endif.
 
-    select * from ZCOA_EMPLOYEE_JOB into table @data(lt_employees).
-    out->write( lt_employees ).
+*    select * from ZCOA_EMPLOYEE_JOB into table @data(lt_employees).
+*    out->write( lt_employees ).
+
+    DATA(ls_employee) = VALUE zcoa_employee( employee_id = 5
+                                             first_name = 'Test employee 5'
+                                             last_name = 'Test test'
+                                             job_id = 91 ).
+    INSERT zcoa_employee FROM @ls_employee.
+    IF sy-subrc EQ 0.
+      out->write( |Employee inserted successfully!| ).
+    ELSE.
+      out->write( |Failed to insert employee! { sy-subrc }| ).
+    ENDIF.
 
   ENDMETHOD.
 

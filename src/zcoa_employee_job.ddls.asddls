@@ -4,14 +4,19 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'CoA: Employees with jobs CDS view'
 @Metadata.ignorePropagatedAnnotations: true
-define view ZCOA_EMPLOYEE_JOB as select from zcoa_employee as _emp
-association [1..1] to zcoa_job as _job on _emp.job_id = _job.job_id
+@VDM.viewType: #COMPOSITE
+define view ZCOA_EMPLOYEE_JOB as select from zcoa_b_employee as _emp
+association [1..1] to zcoa_b_job as _job on _emp.job_id = _job.job_id
                                       and _job.language = $session.system_language
 {
     key employee_id,
-    first_name,
-    last_name,
-    //job_id
-    _job.job_name
+    //first_name,
+    //last_name,
+    _job.job_name,
     
-} where first_name = 'John'
+    concat_with_space(concat_with_space(first_name, last_name, 1), 
+    _job.job_name, 3) as full_name_with_job,
+    
+    cast(0 as abap.dec( 5, 2 )) as salary
+    
+}

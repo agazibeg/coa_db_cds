@@ -3,13 +3,10 @@
 {
 "FROM":
 [
-"ZCOA_B_EMPLOYEE",
-"ZCOA_B_JOB"
+"ZCOA_EMPLOYEE"
 ],
 "ASSOCIATED":
-[
-"ZCOA_B_JOB"
-],
+[],
 "BASE":
 [],
 "ANNO_REF":
